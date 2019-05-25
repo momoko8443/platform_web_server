@@ -9,21 +9,23 @@ const router = new Router({
   prefix: '/benyun'
 });
 
-router.get('/auth/github', ctx => {
-  return passport.authenticate('github', {
-    scope: ['user']
-  })(ctx)
-});
+// router.get('/auth/github', ctx => {
+//   return passport.authenticate('github', {
+//     scope: ['user']
+//   })(ctx)
+// });
 
 router.get('/oauth/github/callback', async (ctx) => {
-  // return passport.authenticate('github', (err, user, info, status) => {
-  //   //ctx.body = {err, user, info, status}
-  //   ctx.login(user);
-  //   ctx.redirect("http://localhost:8081/#/authredirect?state=github&code=123");
-  // })(ctx)
-  const body = ctx.request.query;
-  console.log(body);
-  ctx.redirect("http://localhost:3000/#/authredirect?state="+ body.state + "&code="+ body.code);
+  return passport.authenticate('github', (err, user, info, status) => {
+    //ctx.body = {err, user, info, status}
+    
+    ctx.login(user);
+    ctx.cookies.set('x-access-token',user['accessToken'],{httpOnly:false});
+    ctx.redirect("http://localhost:3000/#/wel");
+  })(ctx)
+  //const body = ctx.request.query;
+  //console.log(body);
+  //ctx.redirect("http://localhost:8081/#/auto_login?state="+ body.state + "&code="+ body.code);
 });
 
 
@@ -36,7 +38,7 @@ router.post('/oauth/github/access_token', async (ctx) => {
 });
 
 router.use('/api/*', async (ctx, next) => {
-  if (ctx.session.isAuthenticated) {
+  if (ctx.isAuthenticated()) {
     await next()
   } else {
     ctx.status = 401
