@@ -2,39 +2,23 @@ const Router = require('koa-router');
 const passport = require('koa-passport');
 const rp = require('request-promise');
 
-const client_ID = "dc72790b5ee64ac89a4d";
-const client_secret = "112640d881bdcef50188fc8a8e0c9a322fe74331";
-
 const router = new Router({
   prefix: '/benyun'
 });
 
-// router.get('/auth/github', ctx => {
-//   return passport.authenticate('github', {
-//     scope: ['user']
-//   })(ctx)
-// });
 
 router.get('/oauth/github/callback', async (ctx) => {
   return passport.authenticate('github', (err, user, info, status) => {
     //ctx.body = {err, user, info, status}
+    if(err){
+      console.log(err);
+    }else{
+      ctx.login(user);
+      //ctx.cookies.set('x-access-token',user['accessToken'],{httpOnly:false});
+      ctx.redirect("http://localhost:3000/main");
+    }
     
-    ctx.login(user);
-    ctx.cookies.set('x-access-token',user['accessToken'],{httpOnly:false});
-    ctx.redirect("http://localhost:3000/#/wel");
   })(ctx)
-  //const body = ctx.request.query;
-  //console.log(body);
-  //ctx.redirect("http://localhost:8081/#/auto_login?state="+ body.state + "&code="+ body.code);
-});
-
-
-router.post('/oauth/github/access_token', async (ctx) => {
-  let token = await getAccessToken(ctx);
-  if(token){
-    ctx.session.isAuthenticated = true;
-  }
-  ctx.body = token;
 });
 
 router.use('/api/*', async (ctx, next) => {
@@ -55,29 +39,6 @@ router.get('/api/user', async (ctx) => {
 
 module.exports = router;
 
-
-function getAccessToken(ctx){
-  var options = {
-    method: 'POST',
-    uri: 'https://github.com/login/oauth/access_token',
-    body: {
-      client_id: client_ID,
-      client_secret: client_secret,
-      code: ctx.request.body.code,
-      state: ctx.request.body.state
-    },
-    json: true // Automatically stringifies the body to JSON
-  };
-  return rp(options)
-    .then(function (result) {
-        console.log(result);
-        return result;
-    })
-    .catch(function (err) {
-        // POST failed...
-        console.error(err);
-    });
-}
 
 
 function getUser(ctx){

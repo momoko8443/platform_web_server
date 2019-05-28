@@ -2,14 +2,20 @@
 const passport = require('koa-passport');
 const GitHubStrategy = require('passport-github').Strategy;
 
-const client_ID = "dc72790b5ee64ac89a4d";
-const client_secret = "112640d881bdcef50188fc8a8e0c9a322fe74331";
+const client_ID = "We@lthW@yClientId";
+const client_secret = "W@u&Jl2OPD";
 const return_url = "http://localhost:3000/benyun/oauth/github/callback";
 
 passport.use(new GitHubStrategy({
         clientID: client_ID,
         clientSecret: client_secret,
-        callbackURL: return_url
+        callbackURL: return_url,
+        tokenURL:"http://localhost:8081/oauth/token",
+        userProfileURL:"http://localhost:8081/user",
+        customHeaders: {
+            Authorization: buildBasicAuth(client_ID,client_secret)
+        }
+        
     },
     function(accessToken, refreshToken, profile, done){
         return done(null, {accessToken, refreshToken, profile});
@@ -17,12 +23,18 @@ passport.use(new GitHubStrategy({
 ));
 
 passport.serializeUser(function(user, done) {
-    done(null, user.profile.username);
+    done(null, user.profile.displayName);
   });
   
 passport.deserializeUser(function(user, done) {
     done(null, user);
 });
+
+function buildBasicAuth(username,password){
+    var tmp = username+":"+password;
+    var tmp = new Buffer(tmp);
+    return "Basic " + tmp.toString('base64');
+}
 
 
 module.exports = passport
