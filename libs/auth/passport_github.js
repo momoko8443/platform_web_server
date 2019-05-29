@@ -4,14 +4,14 @@ const GitHubStrategy = require('passport-github').Strategy;
 
 const client_ID = "We@lthW@yClientId";
 const client_secret = "W@u&Jl2OPD";
-const return_url = "http://localhost:3000/benyun/oauth/github/callback";
+const return_url = "http://47.111.18.121:3000/benyun/oauth/github/callback";
 
 passport.use(new GitHubStrategy({
         clientID: client_ID,
         clientSecret: client_secret,
         callbackURL: return_url,
-        tokenURL:"http://localhost:8081/oauth/token",
-        userProfileURL:"http://localhost:8081/user",
+        tokenURL:"http://47.111.18.121:8081/oauth/token",
+        userProfileURL:"http://47.111.18.121:8081/user",
         customHeaders: {
             Authorization: buildBasicAuth(client_ID,client_secret)
         }
