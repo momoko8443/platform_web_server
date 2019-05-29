@@ -35,7 +35,7 @@ app.use(static(__dirname + '/public'));
 
 router.use('/main',async (ctx, next)=>{
   if(!ctx.isAuthenticated()){
-    const loginUrl = "http://47.111.18.121:8081/oauth/authorize?response_type=code&scope=user_info&state=benyun&client_id=We@lthW@yClientId&redirect_uri=http://47.111.18.121:3000/benyun/oauth/github/callback";
+    const loginUrl = "http://localhost:8081/oauth/authorize?response_type=code&scope=user_info&state=benyun&client_id=We@lthW@yClientId&redirect_uri=http://localhost:3000/benyun/oauth/github/callback";
     ctx.response.redirect(loginUrl);
   }
   await next();
