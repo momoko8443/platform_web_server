@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PIDFILE="./bin/process.pid"  # PID文件路径
+PIDFILE="./startup/process.pid"  # PID文件路径
 echo "stopping platform_web_server" 
 if [ -f $PIDFILE ]; then
     echo "pid file exists...." 
