@@ -15,7 +15,7 @@ router.get('/oauth/github/callback', async (ctx) => {
     }else{
       ctx.login(user);
       //ctx.cookies.set('x-access-token',user['accessToken'],{httpOnly:false});
-      ctx.redirect("http://localhost:3000/main");
+      ctx.redirect("/main");
     }
     
   })(ctx)
