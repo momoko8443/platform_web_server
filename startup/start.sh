@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "starting platform_web_server"
-nohup node ./server.js  & echo $! > ./startup/process.pid
+nohup DOMAIN=47.111.18.121 npm run start  & echo $! > ./startup/process.pid
 echo "done!"
