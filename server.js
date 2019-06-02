@@ -35,7 +35,8 @@ app.use(static(__dirname + '/public'));
 
 router.use('/main',async (ctx, next)=>{
   if(!ctx.isAuthenticated()){
-    const loginUrl = "http://localhost:8081/oauth/authorize?response_type=code&scope=user_info&state=benyun&client_id=We@lthW@yClientId&redirect_uri=http://localhost:3000/benyun/oauth/github/callback";
+    const redirect_uri = buildRedirectUri();
+    const loginUrl = buildLoginUri('code','user_info','benyun','We@lthW@yClientId',redirect_uri);
     ctx.response.redirect(loginUrl);
   }
   await next();
@@ -48,3 +49,13 @@ app.use(router.allowedMethods());
 app.use(benyunRouter.routes());
 app.use(benyunRouter.allowedMethods());
 app.listen(3000);
+
+function buildLoginUri(response_type,scope,state,client_id,redirect_uri){
+  let domain = process.env.DOMAIN? process.env.DOMAIN : "localhost";
+  return `http://${domain}:8081/oauth/authorize?response_type=${response_type}&scope=${scope}&state=${state}&client_id=${client_id}&redirect_uri=http://${domain}:3000/benyun/oauth/github/callback`;
+}
+
+function buildRedirectUri(){
+  let domain = process.env.DOMAIN? process.env.DOMAIN : "localhost";
+  return `http://${domain}:3000/benyun/oauth/github/callback`;
+}

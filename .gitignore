@@ -1,1 +1,4 @@
 node_modules
+nohup.out
+public/*
+views/main.html
