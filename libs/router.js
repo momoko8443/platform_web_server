@@ -41,10 +41,23 @@ router.get('/api/user', async (ctx) => {
 router.get('/api/members', async (ctx) => {
   //let user = await getUser(ctx);
   ctx.body = [
-    {"id":"123a","username":"aaaa","name":"AAAA","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
-    {"id":"123b","username":"bbbb","name":"BBBB","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
-    {"id":"123c","username":"cccc","name":"CCCC","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
-    {"id":"123d","username":"dddd","name":"DDDD","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"}
+    {"id":"123a","username":"张三","name":"张三","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
+    {"id":"123b","username":"李四","name":"李四","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
+    {"id":"123c","username":"王五","name":"王五","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
+    {"id":"123d","username":"赵六","name":"赵六","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"}
+  ];
+});
+
+router.get('/api/roles', async (ctx) => {
+  //let user = await getUser(ctx);
+  ctx.body = [
+    {"id":"123a","username":"ERP管理员","name":"ERP管理员","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
+    {"id":"123b","username":"销售员","name":"销售员","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
+    {"id":"123c","username":"采购员","name":"采购员","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
+    {"id":"123d","username":"财务","name":"财务","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
+    {"id":"123e","username":"供应商","name":"供应商","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
+    {"id":"123f","username":"采购商","name":"采购商","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
+    {"id":"123g","username":"其它","name":"其它","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"}
   ];
 });
 
