@@ -3,7 +3,10 @@ const rp = require('request-promise');
 const rolesApi = new Router();
 function autoParse(body, response, resolveWithFullResponse) {
     if (response.headers['content-type'] && response.headers['content-type'].search('application/json') > -1) {
-        return JSON.parse(body);
+        if(typeof(body) === 'string'){
+            return JSON.parse(body);
+        }
+        return body;
     }else {
         return body;
     }
@@ -30,8 +33,21 @@ rolesApi.get('/', async (ctx)=>{
 rolesApi.get('/:id', async (ctx,next)=>{
 
 });
-
+const url2 = 'http://47.111.18.121:8011/api-upms/saasRole/add';
 rolesApi.post('/',async (ctx,next)=>{
-
+    let role = ctx.request.body;
+    let body  = await request.post({
+        headers:{
+            'content-type': 'application/json'
+        },  
+        url: url2,
+        body: role,
+        json: true
+    }).then((result)=>{
+        //console.log(result);
+        //ctx.body = result.data;
+        return result;
+    });
+    ctx.body = body;
 });
 module.exports = rolesApi;
