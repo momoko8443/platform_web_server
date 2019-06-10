@@ -29,9 +29,15 @@ rolesApi.get('/', async (ctx)=>{
     });
     ctx.body = body.data;
 });
-
+const url3 = "http://47.111.18.121:8011/api-upms/saasRole/v1/";
 rolesApi.get('/:id', async (ctx,next)=>{
-
+    let roleId = ctx.params.id;
+    let body = await request.get({
+        url: url3 + '/'+roleId, 
+    }).then((result)=>{
+        return result;
+    });
+    ctx.body = body.data;
 });
 const url2 = 'http://47.111.18.121:8011/api-upms/saasRole/add';
 rolesApi.post('/',async (ctx,next)=>{
@@ -44,8 +50,22 @@ rolesApi.post('/',async (ctx,next)=>{
         body: role,
         json: true
     }).then((result)=>{
-        //console.log(result);
-        //ctx.body = result.data;
+        return result;
+    });
+    ctx.body = body;
+});
+const url4 = 'http://47.111.18.121:8011/api-upms/saasRole/v1';
+rolesApi.put('/',async (ctx,next)=>{
+    let role = ctx.request.body;
+    console.log(JSON.stringify(role));
+    let body  = await request.put({
+        headers:{
+            'content-type': 'application/json'
+        },  
+        url: url4,
+        body: role,
+        json: true
+    }).then((result)=>{
         return result;
     });
     ctx.body = body;
