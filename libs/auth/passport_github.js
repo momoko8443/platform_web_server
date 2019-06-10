@@ -50,7 +50,7 @@ function buildUserProfileURL(){
 
 function buildBasicAuth(username,password){
     var tmp = username+":"+password;
-    var tmp = new Buffer(tmp);
+    var tmp = Buffer.from(tmp);
     return "Basic " + tmp.toString('base64');
 }
 
