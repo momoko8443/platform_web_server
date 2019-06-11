@@ -9,6 +9,7 @@ function autoParse(body, response, resolveWithFullResponse) {
     }
 }
 let request = rp.defaults({transform:autoParse});
+
 const url = 'http://47.111.18.121:8011/api-upms/saasuser/memberlist';
 membersApi.get('/', async (ctx)=>{
     let query = ctx.query;
@@ -19,12 +20,23 @@ membersApi.get('/', async (ctx)=>{
             username: ''
         },
     }).then((result)=>{
-        //console.log(result);
-        //ctx.body = result.data;
         return result;
     });
     ctx.body = body.data;
 });
+
+
+const url2 = 'http://47.111.18.121:8011/api-upms/saasuser/v1';
+membersApi.delete('/:id', async (ctx,next)=>{
+    let memberId = ctx.params.id;
+    let body = await request.delete({
+        url: url2 + '/' + memberId, 
+    }).then((result)=>{
+        return result;
+    });
+    ctx.body = body.data;
+});
+
 
 membersApi.get('/:id', async (ctx,next)=>{
 
