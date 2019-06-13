@@ -9,8 +9,11 @@ npm install
 ## dev环境启动
 
 ```
-npm run start
+npm run dev_start
+```
 
-//指定restful api server IP地址并启动，默认为localhost
-DOMAIN=xxx.xxx.xxx.xxx npm run start
+## alicloud环境启动
+
+```
+npm run start
 ```

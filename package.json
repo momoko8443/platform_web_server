@@ -20,7 +20,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "DOMAIN=47.111.6.126 node server.js",
+    "dev_start": "node server.js"
   },
   "repository": {
     "type": "git",
