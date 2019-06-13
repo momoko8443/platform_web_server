@@ -1,4 +1,5 @@
-# 平台nodejs
+# 平台前端Web服务器（转发层 Nodejs + koa2）
+
 
 ## 安装
 ```
@@ -14,4 +15,3 @@ npm run dev_start
 ```
 npm run start
 ```
-

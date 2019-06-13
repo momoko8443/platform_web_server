@@ -2,6 +2,9 @@ const Router = require('koa-router');
 const passport = require('koa-passport');
 const rp = require('request-promise');
 
+const memebersApi = require('./routers/members');
+const rolesApi = require('./routers/roles');
+const applicationsApi = require('./routers/applications');
 const router = new Router({
   prefix: '/benyun'
 });
@@ -25,7 +28,8 @@ router.use('/api/*', async (ctx, next) => {
   if (ctx.isAuthenticated()) {
     await next()
   } else {
-    ctx.status = 401
+    ctx.status = 401;
+    //ctx.redirect("/main#/error");
     ctx.body = {
       msg: 'auth fail'
     }
@@ -38,37 +42,8 @@ router.get('/api/user', async (ctx) => {
   ctx.body = user;
 });
 
-router.get('/api/members', async (ctx) => {
-  //let user = await getUser(ctx);
-  ctx.body = [
-    {"id":"123a","username":"aaaa","name":"AAAA","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
-    {"id":"123b","username":"bbbb","name":"BBBB","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
-    {"id":"123c","username":"cccc","name":"CCCC","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"},
-    {"id":"123d","username":"dddd","name":"DDDD","avatar":"https://img14.360buyimg.com/n0/jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg"}
-  ];
-});
+router.use('/api/members', memebersApi.routes(), memebersApi.allowedMethods());
+router.use('/api/roles', rolesApi.routes(), rolesApi.allowedMethods());
+router.use('/api/applications', applicationsApi.routes(), applicationsApi.allowedMethods());
 
 module.exports = router;
-
-
-
-function getUser(ctx){
-  //'https://api.github.com/user',
-  var options = {
-    method: 'GET',
-    uri: 'https://api.github.com/user',
-    json: true,
-    headers: {
-      "User-Agent": 'benyun_eop',
-      authorization: ctx.request.headers.authorization
-    }
-  };
-  return rp(options)
-    .then(function (result) {
-        //console.log(result);
-        return result;
-    })
-    .catch(function (err) {
-        console.error(err);
-    });
-}

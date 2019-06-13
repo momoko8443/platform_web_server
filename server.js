@@ -12,12 +12,13 @@ const views = require('koa-views');
 const router = new Router();
 
 app.keys = ['secret', 'key'];
+let domain = process.env.DOMAIN? process.env.DOMAIN : "localhost";
 const CONFIG = {
     key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
     /** (number || 'session') maxAge in ms (default is 1 days) */
     /** 'session' will result in a cookie that expires when session/browser is closed */
     /** Warning: If a session cookie is stolen, this cookie will never expire */
-    maxAge: 86400000,
+    maxAge: 30 * 60 * 1000,
     autoCommit: true, /** (boolean) automatically commit headers (default true) */
     overwrite: true, /** (boolean) can overwrite or not (default true) */
     httpOnly: true, /** (boolean) httpOnly or not (default true) */
@@ -48,14 +49,14 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(benyunRouter.routes());
 app.use(benyunRouter.allowedMethods());
-app.listen(3000);
+app.listen(3000, ()=>{
+  console.log(`listen on ${domain}:3000`);
+});
 
 function buildLoginUri(response_type,scope,state,client_id,redirect_uri){
-  let domain = process.env.DOMAIN? process.env.DOMAIN : "localhost";
   return `http://${domain}:8081/oauth/authorize?response_type=${response_type}&scope=${scope}&state=${state}&client_id=${client_id}&redirect_uri=http://${domain}:3000/benyun/oauth/github/callback`;
 }
 
 function buildRedirectUri(){
-  let domain = process.env.DOMAIN? process.env.DOMAIN : "localhost";
   return `http://${domain}:3000/benyun/oauth/github/callback`;
 }
