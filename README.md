@@ -5,8 +5,13 @@
 npm install
 ```
 
-## 启动
+## dev环境启动
 ```
-node server.js
+npm run dev_start
+```
+
+## alicloud环境启动
+```
+npm run start
 ```
 
