@@ -20,8 +20,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DOMAIN=47.111.6.126 node server.js",
-    "dev_start": "node server.js"
+    "start": "DOMAIN=eop.yuneop.com IDM=47.111.6.126:8081 node server.js",
+    "dev_start": "DOMAIN=localhost:3000 IDM=localhost:8081 node server.js"
   },
   "repository": {
     "type": "git",

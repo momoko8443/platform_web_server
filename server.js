@@ -12,7 +12,8 @@ const views = require('koa-views');
 const router = new Router();
 
 app.keys = ['secret', 'key'];
-let domain = process.env.DOMAIN? process.env.DOMAIN : "localhost";
+let domain = process.env.DOMAIN? process.env.DOMAIN : "localhost:3000";
+let idm_domain = process.env.IDM? process.env.IDM : "localhost:8081";
 const CONFIG = {
     key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
     /** (number || 'session') maxAge in ms (default is 1 days) */
@@ -54,9 +55,9 @@ app.listen(3000, ()=>{
 });
 
 function buildLoginUri(response_type,scope,state,client_id,redirect_uri){
-  return `http://${domain}:8081/oauth/authorize?response_type=${response_type}&scope=${scope}&state=${state}&client_id=${client_id}&redirect_uri=http://${domain}:3000/benyun/oauth/github/callback`;
+  return `http://${idm_domain}/oauth/authorize?response_type=${response_type}&scope=${scope}&state=${state}&client_id=${client_id}&redirect_uri=http://${domain}/benyun/oauth/github/callback`;
 }
 
 function buildRedirectUri(){
-  return `http://${domain}:3000/benyun/oauth/github/callback`;
+  return `http://${domain}/benyun/oauth/github/callback`;
 }
