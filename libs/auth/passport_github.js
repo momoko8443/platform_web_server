@@ -4,7 +4,8 @@ const GitHubStrategy = require('passport-github').Strategy;
 
 const client_ID = "We@lthW@yClientId";
 const client_secret = "W@u&Jl2OPD";
-const domain = process.env.DOMAIN? process.env.DOMAIN : "localhost";
+const domain = process.env.DOMAIN? process.env.DOMAIN : "localhost:3000";
+let idm_domain = process.env.IDM? process.env.IDM : "localhost:8081";
 let userPool = {};
 passport.use(new GitHubStrategy({
         clientID: client_ID,
@@ -38,14 +39,14 @@ passport.deserializeUser(function(username, done) {
 });
 
 function buildCallbackURL(){
-    return `http://${domain}:3000/benyun/oauth/github/callback`;
+    return `http://${domain}/benyun/oauth/github/callback`;
 }
 
 function buildTokenURL(){
-    return `http://${domain}:8081/oauth/token`;
+    return `http://${idm_domain}/oauth/token`;
 }
 function buildUserProfileURL(){
-    return `http://${domain}:8081/user`;
+    return `http://${idm_domain}/user`;
 }
 
 function buildBasicAuth(username,password){
