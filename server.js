@@ -51,7 +51,7 @@ app.use(router.allowedMethods());
 app.use(benyunRouter.routes());
 app.use(benyunRouter.allowedMethods());
 app.listen(3000, ()=>{
-  console.log(`listen on ${domain}:3000`);
+  console.log(`listen on ${domain}`);
 });
 
 function buildLoginUri(response_type,scope,state,client_id,redirect_uri){
