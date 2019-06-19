@@ -21,7 +21,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DOMAIN=eop.yuneop.com IDM=47.111.6.126:8081 node server.js",
+    "start": "DOMAIN=eop.yuneop.com IDM=47.111.18.39:5200 node server.js",
     "dev_start": "DOMAIN=localhost:3000 IDM=localhost:8081 node server.js",
     "local_start": "SKIP_AUTH=1 DOMAIN=localhost:3000 IDM=47.111.6.126:8081 node server.js"
   },
