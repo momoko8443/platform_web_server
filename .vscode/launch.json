@@ -7,9 +7,9 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "启动程序",
-            "runtimeExecutable": "${env:HOME}/.nvm/versions/node/v10.2.0/bin/node",
+            "name": "Launch Program",
             "program": "${workspaceFolder}/server.js"
         }
+
     ]
 }

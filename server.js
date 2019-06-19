@@ -3,7 +3,7 @@ const app = new Koa();
 const static = require('koa-static');
 const bodyParser = require('koa-bodyparser')
 const session = require('koa-session');
-const passport = require('./libs/auth/passport_github');
+const passport = require('./libs/auth/passport_local');
 const benyunRouter = require('./libs/router');
 const Router = require('koa-router');
 const path = require('path');
@@ -33,18 +33,47 @@ app.use(session(CONFIG, app));
 app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(static(__dirname + '/public'));
+app.use(static(__dirname + '/public/main'));
+app.use(static(__dirname + '/public/idm'));
 
+// router.use('/*', async (ctx, next)=>{
+//   if(!ctx.isAuthenticated()){
+//     // const redirect_uri = buildRedirectUri();
+//     // const loginUrl = buildLoginUri('code','user_info','benyun','We@lthW@yClientId',redirect_uri);
+//     // ctx.response.redirect(loginUrl);
+//     await ctx.render('login');
+//   }else{
+//     await next();
+//   }
+// });
 router.use('/main',async (ctx, next)=>{
   if(!ctx.isAuthenticated()){
-    const redirect_uri = buildRedirectUri();
-    const loginUrl = buildLoginUri('code','user_info','benyun','We@lthW@yClientId',redirect_uri);
-    ctx.response.redirect(loginUrl);
+    // const redirect_uri = buildRedirectUri();
+    // const loginUrl = buildLoginUri('code','user_info','benyun','We@lthW@yClientId',redirect_uri);
+    // ctx.response.redirect(loginUrl);
+    await ctx.render('login');
+  }else{
+    await next();
   }
-  await next();
 });
+router.get('/login',
+  async (ctx, next) => { 
+    await ctx.render('login');
+});
+
+router.post('/login', 
+  passport.authenticate('local', 
+    { 
+      failureRedirect: '/login',
+      successRedirect: '/main',
+    })
+);
 router.get('/main',async(ctx,next) => {
-  await ctx.render('main');
+  if(ctx.isAuthenticated()){
+    await ctx.render('main');
+  }else{
+    await ctx.redirect('/login');
+  }
 });
 app.use(router.routes());
 app.use(router.allowedMethods());

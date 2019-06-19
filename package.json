@@ -14,6 +14,7 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
     "passport-github": "^1.1.0",
+    "passport-local": "^1.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
   },
@@ -22,7 +23,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "DOMAIN=eop.yuneop.com IDM=47.111.6.126:8081 node server.js",
     "dev_start": "DOMAIN=localhost:3000 IDM=localhost:8081 node server.js",
-    "local_start": "SKIP_AUTH=1 OMAIN=localhost:3000 IDM=47.111.6.126:8081 node server.js"
+    "local_start": "SKIP_AUTH=1 DOMAIN=localhost:3000 IDM=47.111.6.126:8081 node server.js"
   },
   "repository": {
     "type": "git",

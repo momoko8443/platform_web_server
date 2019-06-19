@@ -8,10 +8,36 @@ const rolesApi = require('./routers/roles');
 const applicationsApi = require('./routers/applications');
 
 const SKIP_AUTH = !!+process.env.SKIP_AUTH;
+let idm_domain = process.env.IDM? process.env.IDM : "47.111.18.39:5200";
 const router = new Router({
   prefix: '/benyun'
 });
 
+
+router.get('/jumper',async (ctx) => {
+  let query = ctx.query;
+  let appUrl = decodeURI(query.appUrl);
+  console.log(appUrl);
+  const access_token = ctx.req.user.token.access_token;
+  const redirectUrl = 'http://' + idm_domain + appUrl + '&access_token=' + access_token;
+  console.log(redirectUrl);
+  await ctx.redirect(redirectUrl);
+})
+
+router.post('/jumper',async (ctx) => {
+  let body = ctx.request.body;
+  let appUrl = decodeURI(body.appUrl);
+  console.log(appUrl);
+  const access_token = ctx.req.user.token.access_token;
+  const redirectUrl = 'http://' + idm_domain + appUrl + '&access_token=' + access_token;
+  console.log(redirectUrl);
+  ctx.body = redirectUrl;
+})
+
+router.get('/jumper2',async (ctx) => {
+  console.log(ctx.header);
+  ctx.body = "ok";
+})
 
 router.get('/oauth/github/callback', async (ctx) => {
   return passport.authenticate('github', (err, user, info, status) => {

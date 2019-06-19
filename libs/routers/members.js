@@ -17,7 +17,7 @@ membersApi.get('/', async (ctx)=>{
         form: {
             size: parseInt(query.pageSize),
             total: parseInt(query.currentPage),
-            tenantId: query.tenantId
+            tenantId: query.tenantId ? query.tenantId:1
         },
     }).then((result)=>{
         return result;
