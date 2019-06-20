@@ -10,7 +10,7 @@ function autoParse(body, response, resolveWithFullResponse) {
 }
 let request = rp.defaults({transform:autoParse});
 
-const url = 'http://47.111.18.121:8011/api-upms/saasuser/memberlist';
+const url = `http://47.111.18.121:8011/api-upms/saasuser/memberlist`;
 usersApi.get('/', async (ctx)=>{
     let query = ctx.query;
     let body  = await request.post(url,{

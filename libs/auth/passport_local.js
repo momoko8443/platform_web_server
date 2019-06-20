@@ -2,6 +2,7 @@
 const passport = require('koa-passport');
 const LocalStrategy = require('passport-local').Strategy;
 const rp = require('request-promise');
+const auth= require('../utils/auth');
 // function autoParse(body, response, resolveWithFullResponse) {
 //     if (response.headers['content-type'] && response.headers['content-type'].search('application/json') > -1) {
 //         return JSON.parse(body);
@@ -24,7 +25,7 @@ passport.use(new LocalStrategy((username,password,cb)=>{
     rp.post({
         headers:{
             'content-type': 'application/json',
-            'Authorization':  buildBasicAuth(client_ID, client_secret)
+            'Authorization':  auth.buildBasicAuth(client_ID, client_secret)
         },  
         url: url,
         json: true
@@ -32,7 +33,7 @@ passport.use(new LocalStrategy((username,password,cb)=>{
         token = result;
         return rp.get({
             headers:{
-                'Authorization': buildBearerAuth(token.access_token)
+                'Authorization': auth.buildBearerAuth(token.access_token)
             },
             url: buildUserProfileURL(),
             json: true

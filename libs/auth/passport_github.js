@@ -1,6 +1,7 @@
 // passport.js
 const passport = require('koa-passport');
 const GitHubStrategy = require('passport-github').Strategy;
+const auth= require('../utils/auth');
 
 const client_ID = "We@lthW@yClientId";
 const client_secret = "W@u&Jl2OPD";
@@ -14,7 +15,7 @@ passport.use(new GitHubStrategy({
         tokenURL: buildTokenURL(),
         userProfileURL:buildUserProfileURL(),
         customHeaders: {
-            Authorization: buildBasicAuth(client_ID,client_secret)
+            Authorization: auth.buildBasicAuth(client_ID,client_secret)
         }     
     },
     function(accessToken, refreshToken, profile, done){
@@ -49,11 +50,4 @@ function buildUserProfileURL(){
     return `http://${idm_domain}/user`;
 }
 
-function buildBasicAuth(username,password){
-    var tmp = username+":"+password;
-    var tmp = Buffer.from(tmp);
-    return "Basic " + tmp.toString('base64');
-}
-
-
-module.exports = passport
+module.exports = passport;
