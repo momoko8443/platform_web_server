@@ -13,6 +13,24 @@ function autoParse(body, response, resolveWithFullResponse) {
 let request = rp.defaults({transform:autoParse});
 
 const url = `http://${idm_domain}/api-user/saasuser/page`;
+/**
+ * @api {get} /benyun/api/members
+ * @apiDescription 获取租户下所有成员列表
+ * @apiName getMembers
+ * @apiGroup Members
+ * @apiParam (queryParams) {Number} pageSize 页面大小
+ * @apiParam (queryParams) {Number} currentPage 当前页码
+ * @apiParam (queryParams) {Number} tenantId 租户ID
+ * @apiSuccess {json} result
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+ *      "success" : "true",
+ *      "result" : {
+ *          "name" : "loginName",
+ *          "password" : "loginPass"
+ *      }
+ *  }
+ */
 membersApi.get('/', async (ctx)=>{
     let query = ctx.query;
     let body  = await request.post(url,{
@@ -32,17 +50,36 @@ membersApi.get('/', async (ctx)=>{
 
 
 const url2 = `http://${idm_domain}/api-user/saasuser/v1`;
+/**
+ * @api {delete} /benyun/api/members/:id
+ * @apiDescription 移除租户下某个成员
+ * @apiName deleteMember
+ * @apiGroup Members
+ * @apiParam (pathParams) {Number} :id 成员ID
+ * @apiParam (queryParams) {Number} tenantId 租户ID
+ * @apiSuccess {json} result
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+ *      "success" : "true",
+ *      "result" : {
+ *          "name" : "loginName",
+ *          "password" : "loginPass"
+ *      }
+ *  }
+ */
 membersApi.delete('/:id', async (ctx,next)=>{
     let memberId = ctx.params.id;
-    let body = await request.delete({
-        url: url2 + '/' + memberId, 
+    let tenantId = ctx.query.tenantId;
+    let body = ctx.request.body;
+    let result = await request.delete({
+        url: url2 + '/' + memberId + '?tenantId=' + tenantId, 
         headers:{
             'Authorization': auth.buildBearerAuth(ctx)
         },
     }).then((result)=>{
         return result;
     });
-    ctx.body = body.data;
+    ctx.body = result.data;
 });
 
 
@@ -50,7 +87,38 @@ membersApi.get('/:id', async (ctx,next)=>{
 
 });
 
-membersApi.post('/',async (ctx,next)=>{
 
+const url3 = `http://${idm_domain}/api-user/saasuser/add`;
+/**
+ * @api {post} /benyun/api/members
+ * @apiDescription 为租户添加新成员
+ * @apiName postMember
+ * @apiGroup Members
+ * @apiParam (jsonBody) {String} username 新成员的平台用户名
+ * @apiParam (jsonBody) {Number} tenantId 租户ID
+ * @apiSuccess {json} result
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+ *      "success" : "true",
+ *      "result" : {
+ *          "name" : "loginName",
+ *          "password" : "loginPass"
+ *      }
+ *  }
+ */
+membersApi.post('/',async (ctx,next)=>{
+    let body = ctx.request.body;
+    let result  = await request.post(url,{
+        form: {
+            userName: body.username,
+            tenantId: body.tenantId ? body.tenantId:1
+        },
+        headers:{
+            'Authorization': auth.buildBearerAuth(ctx)
+        }
+    }).then((result)=>{
+        return result;
+    });
+    ctx.body = result.data;
 });
 module.exports = membersApi;

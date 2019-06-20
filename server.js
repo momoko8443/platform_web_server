@@ -35,6 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(static(__dirname + '/public/main'));
 app.use(static(__dirname + '/public/idm'));
+app.use(static(__dirname + '/docs'));
 
 // router.use('/*', async (ctx, next)=>{
 //   if(!ctx.isAuthenticated()){

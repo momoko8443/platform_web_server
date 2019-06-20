@@ -13,6 +13,23 @@ function autoParse(body, response, resolveWithFullResponse) {
     }
 }
 let request = rp.defaults({transform:autoParse});
+
+/**
+ * @api {get} /benyun/api/applications
+ * @apiDescription 获取租户下所有应用列表
+ * @apiName getApplications
+ * @apiGroup Applications
+ * @apiParam (queryParams) {Number} tenantId 租户ID
+ * @apiSuccess {json} result
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+ *      "success" : "true",
+ *      "result" : {
+ *          "name" : "loginName",
+ *          "password" : "loginPass"
+ *      }
+ *  }
+ */
 const url = `http://${idm_domain}/api-user/saasTenantApp/list`;
 applicationsApi.get('/', async (ctx)=>{
     let query = ctx.query;
@@ -30,12 +47,30 @@ applicationsApi.get('/', async (ctx)=>{
 });
 
 const url2 = `http://${idm_domain}/api-user/saasAppPermission/tree`;
+/**
+ * @api {get} /benyun/api/applications/:id/permissions
+ * @apiDescription 获取租户下所有应用列表
+ * @apiName getPermissionsByApplication
+ * @apiGroup Applications
+ * @apiParam (pathParams) {Number} :id 应用ID
+ * @apiParam (queryParams) {Number} tenantId 租户ID
+ * @apiSuccess {json} result
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+ *      "success" : "true",
+ *      "result" : {
+ *          "name" : "loginName",
+ *          "password" : "loginPass"
+ *      }
+ *  }
+ */
 applicationsApi.get('/:appId/permissions', async (ctx)=>{
-    let query = ctx.params;
+    let appId = ctx.params.appId;
+    let tenantId = ctx.query.tenantId;
     let body  = await request.get(url2,{
         qs: {
-            tenantId: 1,
-            appId: parseInt(query.appId),
+            tenantId: parseInt(tenantId),
+            appId: parseInt(appId),
         },
         headers: {
             'Authorization' : auth.buildBearerAuth(ctx)
