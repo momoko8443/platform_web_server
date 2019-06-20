@@ -23,13 +23,22 @@ const url = `http://${idm_domain}/api-user/saasuser/page`;
  * @apiParam (queryParams) {Number} tenantId 租户ID
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "records": [
+    {
+      "id": "1",
+      "userName": "test",
+      "headImgUrl": "http://img2.imgtn.bdimg.com/it/u=3937854204,4209154356&fm=11&gp=0.jpg",
+      "mobile": "13000000000",
+      "status": "1"
+    }
+  ],
+  "total": 1,
+  "size": 10,
+  "current": 1,
+  "searchCount": true,
+  "pages": 1
+}
  */
 membersApi.get('/', async (ctx)=>{
     let query = ctx.query;
@@ -59,13 +68,14 @@ const url2 = `http://${idm_domain}/api-user/saasuser/v1`;
  * @apiParam (queryParams) {Number} tenantId 租户ID
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+ {
+  "code": 0,
+  "errors": null,
+  "message": "success",
+  "data": "删除成功",
+  "extra": null,
+  "timestamp": "2019-06-20 20:02:20"
+}
  */
 membersApi.delete('/:id', async (ctx,next)=>{
     let memberId = ctx.params.id;
@@ -79,7 +89,7 @@ membersApi.delete('/:id', async (ctx,next)=>{
     }).then((result)=>{
         return result;
     });
-    ctx.body = result.data;
+    ctx.body = result;
 });
 
 
@@ -98,13 +108,13 @@ const url3 = `http://${idm_domain}/api-user/saasuser/add`;
  * @apiParam (jsonBody) {Number} tenantId 租户ID
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "code": 0,
+  "errors": null,
+  "message": "success",
+  "extra": null,
+  "timestamp": "2019-06-20 20:15:46"
+}
  */
 membersApi.post('/',async (ctx,next)=>{
     let body = ctx.request.body;
@@ -119,6 +129,7 @@ membersApi.post('/',async (ctx,next)=>{
     }).then((result)=>{
         return result;
     });
-    ctx.body = result.data;
+    delete result['data'];
+    ctx.body = result;
 });
 module.exports = membersApi;

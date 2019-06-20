@@ -25,13 +25,29 @@ const url = `http://${idm_domain}/api-user/saasRole/page`;
  * @apiParam (queryParams) {Number} currentPage 当前页码
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "records": [
+    {
+      "id": "1",
+      "roleName": "超级管理员2",
+      "roleAlias": "SYSTEM",
+      "tenantId": "1",
+      "sort": 1
+    },
+    {
+      "id": "1135799116570017793",
+      "roleName": "采购员2",
+      "roleAlias": null,
+      "tenantId": "1",
+      "sort": 1
+    }
+  ],
+  "total": 2,
+  "size": 3,
+  "current": 1,
+  "searchCount": true,
+  "pages": 1
+}
  */
 rolesApi.get('/', async (ctx)=>{
     let query = ctx.query;
@@ -50,7 +66,7 @@ rolesApi.get('/', async (ctx)=>{
     });
     ctx.body = body.data;
 });
-const url3 = `http://${idm_domain}/api-user/saasRole/v1/`;
+const url3 = `http://${idm_domain}/api-user/saasRole/v1`;
 /**
  * @api {get} /benyun/api/roles/:id
  * @apiDescription 获取具体角色信息
@@ -59,18 +75,33 @@ const url3 = `http://${idm_domain}/api-user/saasRole/v1/`;
  * @apiParam (pathParams) {Number} :id 角色ID
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "roleId": "1141691215347347458",
+  "roleName": "testRole",
+  "userList": [
+    "1"
+  ],
+  "reqRoleDtoReqs": [
+    {
+      "appId": 5,
+      "pemssionIds": [
+        175,
+        177,
+        176,
+        178
+      ]
+    }
+  ],
+  "tenantId": "1"
+}
  */
 rolesApi.get('/:id', async (ctx,next)=>{
     let roleId = ctx.params.id;
     let body = await request.get({
         url: url3 + '/'+roleId, 
+        headers:{
+            'Authorization': auth.buildBearerAuth(ctx)
+        }, 
     }).then((result)=>{
         return result;
     });
@@ -83,22 +114,34 @@ const url2 = `http://${idm_domain}/api-user/saasRole/add`;
  * @apiName postRole
  * @apiGroup Roles
  * @apiParamExample {json} Request-Body:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "roleName": "testRole",
+  "userList": [
+    "1"
+  ],
+  "reqRoleDtoReqs": [
+    {
+      "appId": "5",
+      "pemssionIds": [
+        "175",
+        "177",
+        "176",
+        "178"
+      ]
+    }
+  ],
+  "tenantId": "1"
+}
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "code": 0,
+  "errors": null,
+  "message": "success",
+  "data": "新增成功",
+  "extra": null,
+  "timestamp": "2019-06-20 20:56:12"
+}
  */
 rolesApi.post('/',async (ctx,next)=>{
     let role = ctx.request.body;
@@ -123,22 +166,34 @@ const url4 = `http://${idm_domain}/api-user/saasRole/v1`;
  * @apiGroup Roles
  * @apiParam (pathParams) {Number} :id 角色ID
  * @apiParamExample {json} Request-Body:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "roleName": "testRole",
+  "userList": [
+    "1"
+  ],
+  "reqRoleDtoReqs": [
+    {
+      "appId": "5",
+      "pemssionIds": [
+        "175",
+        "177",
+        "176",
+        "178"
+      ]
+    }
+  ],
+  "tenantId": "1"
+}
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "code": 0,
+  "errors": null,
+  "message": "success",
+  "data": "修改成功",
+  "extra": null,
+  "timestamp": "2019-06-20 22:37:18"
+}
  */
 rolesApi.put('/:id',async (ctx,next)=>{
     let roleId = ctx.params.id;
@@ -149,7 +204,7 @@ rolesApi.put('/:id',async (ctx,next)=>{
             'content-type': 'application/json',
             'Authorization': auth.buildBearerAuth(ctx)
         },  
-        url: url4 + '/' + roleId,
+        url: url4,
         body: role,
         json: true
     }).then((result)=>{
@@ -158,7 +213,7 @@ rolesApi.put('/:id',async (ctx,next)=>{
     ctx.body = body;
 });
 
-const url5 = `http://${idm_domain}/api-user/saasRole/v1/`;
+const url5 = `http://${idm_domain}/api-user/saasRole/v1`;
 /**
  * @api {delete} /benyun/api/roles/:id
  * @apiDescription 更新角色
@@ -167,13 +222,14 @@ const url5 = `http://${idm_domain}/api-user/saasRole/v1/`;
  * @apiParam (pathParams) {Number} :id 角色ID
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "code": 0,
+  "errors": null,
+  "message": "success",
+  "data": "删除成功",
+  "extra": null,
+  "timestamp": "2019-06-20 22:44:17"
+}
  */
 rolesApi.delete('/:id', async (ctx, next)=>{
     let roleId = ctx.params.id;

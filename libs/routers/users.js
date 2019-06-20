@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const rp = require('request-promise');
+const auth = require('../utils/auth');
 const usersApi = new Router();
 let idm_domain = process.env.IDM? process.env.IDM : "47.111.18.39:5200";
 function autoParse(body, response, resolveWithFullResponse) {
@@ -22,13 +23,22 @@ const url = `http://${idm_domain}/api-user/saasuser/memberlist`;
  * @apiParam (queryParams) {Number} currentPage 当前页码
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
- *  {
- *      "success" : "true",
- *      "result" : {
- *          "name" : "loginName",
- *          "password" : "loginPass"
- *      }
- *  }
+{
+  "records": [
+    {
+      "id": "1",
+      "userName": "test",
+      "headImgUrl": "http://img2.imgtn.bdimg.com/it/u=3937854204,4209154356&fm=11&gp=0.jpg",
+      "mobile": "13000000000",
+      "status": "1"
+    }
+  ],
+  "total": 1,
+  "size": 10,
+  "current": 1,
+  "searchCount": true,
+  "pages": 1
+}
  */
 usersApi.get('/', async (ctx)=>{
     let query = ctx.query;
@@ -38,6 +48,9 @@ usersApi.get('/', async (ctx)=>{
             total: parseInt(query.currentPage),
             username: query.username
         },
+        headers: {
+            'Authorization' : auth.buildBearerAuth(ctx)
+        }
     }).then((result)=>{
         return result;
     });

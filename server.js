@@ -52,9 +52,9 @@ router.use('/main',async (ctx, next)=>{
     // const redirect_uri = buildRedirectUri();
     // const loginUrl = buildLoginUri('code','user_info','benyun','We@lthW@yClientId',redirect_uri);
     // ctx.response.redirect(loginUrl);
-    await ctx.render('login');
+    await ctx.redirect('/login');
   }else{
-    await next();
+    await ctx.render('main')
   }
 });
 router.get('/login',
