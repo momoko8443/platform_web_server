@@ -14,7 +14,7 @@ let request = rp.defaults({transform:autoParse});
 
 const url = `http://${idm_domain}/api-user/saasuser/page`;
 /**
- * @api {get} /benyun/api/members
+ * @api {get} /members
  * @apiDescription 获取租户下所有成员列表
  * @apiName getMembers
  * @apiGroup Members
@@ -60,7 +60,7 @@ membersApi.get('/', async (ctx)=>{
 
 const url2 = `http://${idm_domain}/api-user/saasuser/v1`;
 /**
- * @api {delete} /benyun/api/members/:id
+ * @api {delete} members/:id
  * @apiDescription 移除租户下某个成员
  * @apiName deleteMember
  * @apiGroup Members
@@ -100,7 +100,7 @@ membersApi.get('/:id', async (ctx,next)=>{
 
 const url3 = `http://${idm_domain}/api-user/saasuser/add`;
 /**
- * @api {post} /benyun/api/members
+ * @api {post} /members
  * @apiDescription 为租户添加新成员
  * @apiName postMember
  * @apiGroup Members

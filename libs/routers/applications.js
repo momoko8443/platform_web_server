@@ -15,7 +15,7 @@ function autoParse(body, response, resolveWithFullResponse) {
 let request = rp.defaults({transform:autoParse});
 
 /**
- * @api {get} /benyun/api/applications
+ * @api {get} /applications
  * @apiDescription 获取租户下所有应用列表
  * @apiName getApplications
  * @apiGroup Applications
@@ -34,10 +34,10 @@ let request = rp.defaults({transform:autoParse});
  */
 const url = `http://${idm_domain}/api-user/saasTenantApp/list`;
 applicationsApi.get('/', async (ctx)=>{
-    let query = ctx.query;
+    let tenantId = ctx.query.tenantId;
     let body  = await request.get(url,{
         qs: {
-            tenantId: 1,
+            tenantId: tenantId,
         },
         headers: {
             'Authorization' : auth.buildBearerAuth(ctx)
@@ -50,7 +50,7 @@ applicationsApi.get('/', async (ctx)=>{
 
 const url2 = `http://${idm_domain}/api-user/saasAppPermission/tree`;
 /**
- * @api {get} /benyun/api/applications/:id/permissions
+ * @api {get} /applications/:id/permissions
  * @apiDescription 获取应用的所有权限
  * @apiName getPermissionsByApplication
  * @apiGroup Applications
