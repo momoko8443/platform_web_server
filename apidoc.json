@@ -3,7 +3,7 @@
     "version": "1.0.0", 
     "description": "platform-web-server项目Restful API文档(Nodejs)",
     "title": "platform-web-server API",  
-    "url" : "http://localhost:3000/benyun/api",
+    "url" : "http://localhost:3000/benyun",
     "forceLanguage":"zh-cn",
     "template": {
       "withCompare": true,

@@ -15,7 +15,7 @@ function autoParse(body, response, resolveWithFullResponse) {
 let request = rp.defaults({transform:autoParse});
 
 /**
- * @api {get} /applications
+ * @api {get} /api/applications
  * @apiDescription 获取租户下所有应用列表
  * @apiName getApplications
  * @apiGroup Applications
@@ -50,7 +50,7 @@ applicationsApi.get('/', async (ctx)=>{
 
 const url2 = `http://${idm_domain}/api-user/saasAppPermission/tree`;
 /**
- * @api {get} /applications/:id/permissions
+ * @api {get} /api/applications/:id/permissions
  * @apiDescription 获取应用的所有权限
  * @apiName getPermissionsByApplication
  * @apiGroup Applications

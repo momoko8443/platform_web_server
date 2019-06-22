@@ -16,7 +16,7 @@ function autoParse(body, response, resolveWithFullResponse) {
 let request = rp.defaults({transform:autoParse});
 const url = `http://${idm_domain}/api-user/saasRole/page`;
 /**
- * @api {get} /roles
+ * @api {get} /api//roles
  * @apiDescription 获取租户下所有角色列表
  * @apiName getRoles
  * @apiGroup Roles
@@ -68,7 +68,7 @@ rolesApi.get('/', async (ctx)=>{
 });
 const url3 = `http://${idm_domain}/api-user/saasRole/v1`;
 /**
- * @api {get} /roles/:id
+ * @api {get} /api/roles/:id
  * @apiDescription 获取具体角色信息
  * @apiName getRole
  * @apiGroup Roles
@@ -109,7 +109,7 @@ rolesApi.get('/:id', async (ctx,next)=>{
 });
 const url2 = `http://${idm_domain}/api-user/saasRole/add`;
 /**
- * @api {post} /roles
+ * @api {post} /api/roles
  * @apiDescription 添加新角色
  * @apiName postRole
  * @apiGroup Roles
@@ -160,7 +160,7 @@ rolesApi.post('/',async (ctx,next)=>{
 });
 const url4 = `http://${idm_domain}/api-user/saasRole/v1`;
 /**
- * @api {put} /roles/:id
+ * @api {put} /api/roles/:id
  * @apiDescription 更新角色
  * @apiName putRole
  * @apiGroup Roles
@@ -215,7 +215,7 @@ rolesApi.put('/:id',async (ctx,next)=>{
 
 const url5 = `http://${idm_domain}/api-user/saasRole/v1`;
 /**
- * @api {delete} /roles/:id
+ * @api {delete} /api/roles/:id
  * @apiDescription 更新角色
  * @apiName deleteRole
  * @apiGroup Roles

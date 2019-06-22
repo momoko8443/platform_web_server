@@ -14,7 +14,7 @@ let request = rp.defaults({transform:autoParse});
 
 const url = `http://${idm_domain}/api-user/saasuser/memberlist`;
 /**
- * @api {get} /users
+ * @api {get} /api/users
  * @apiDescription 根据用户名搜索平台下的用户列表
  * @apiName searchUsers
  * @apiGroup Users

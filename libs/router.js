@@ -2,6 +2,9 @@ const Router = require('koa-router');
 const passport = require('koa-passport');
 const rp = require('request-promise');
 
+const registerApi = require('./routers/register');
+const senderApi = require('./routers/sender');
+const validatorApi = require('./routers/validator');
 const usersApi = require('./routers/users');
 const memebersApi = require('./routers/members');
 const rolesApi = require('./routers/roles');
@@ -21,11 +24,6 @@ router.post('/jumper',async (ctx) => {
   const redirectUrl = 'http://' + idm_domain + appUrl + '&access_token=' + access_token;
   console.log(redirectUrl);
   ctx.body = redirectUrl;
-})
-
-router.get('/jumper2',async (ctx) => {
-  console.log(ctx.header);
-  ctx.body = "ok";
 })
 
 router.get('/oauth/github/callback', async (ctx) => {
@@ -60,6 +58,9 @@ router.get('/api/user', async (ctx) => {
   ctx.body = user;
 });
 
+router.use('/sender',senderApi.routes(), senderApi.allowedMethods());
+router.use('/validator',validatorApi.routes(), validatorApi.allowedMethods());
+router.use('/register',registerApi.routes(), registerApi.allowedMethods());
 router.use('/api/users', usersApi.routes(), usersApi.allowedMethods());
 router.use('/api/members', memebersApi.routes(), memebersApi.allowedMethods());
 router.use('/api/roles', rolesApi.routes(), rolesApi.allowedMethods());
