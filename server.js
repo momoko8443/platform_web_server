@@ -62,13 +62,15 @@ router.get('/login',
     await ctx.render('login');
 });
 
-router.post('/login', 
-  passport.authenticate('local', 
-    { 
-      failureRedirect: '/login',
-      successRedirect: '/main',
-    })
-);
+// router.post('/login', 
+//   passport.authenticate('local', 
+//     { 
+//       failureRedirect: '/login?code=400',
+//       successRedirect: '/main',
+//     })
+// );
+router.post('/login', passport.authenticate('local',{successRedirect: '/main'}));
+
 router.get('/main',async(ctx,next) => {
   if(ctx.isAuthenticated()){
     await ctx.render('main');
@@ -76,10 +78,17 @@ router.get('/main',async(ctx,next) => {
     await ctx.redirect('/login');
   }
 });
+// app.use(async(ctx,next)=>{
+//   console.log('aaa');
+//   await next();
+//   console.log('bbb');
+// })
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(benyunRouter.routes());
 app.use(benyunRouter.allowedMethods());
+
+
 app.listen(3000, ()=>{
   console.log(`listen on ${domain}`);
 });

@@ -104,7 +104,7 @@ rolesApi.get('/:id', async (ctx,next)=>{
         }, 
     }).then((result)=>{
         return result;
-    });
+    })
     ctx.body = body.data;
 });
 const url2 = `http://${idm_domain}/api-user/saasRole/add`;
