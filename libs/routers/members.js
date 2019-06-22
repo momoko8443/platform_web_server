@@ -104,7 +104,7 @@ const url3 = `http://${idm_domain}/api-user/saasuser/add`;
  * @apiDescription 为租户添加新成员
  * @apiName postMember
  * @apiGroup Members
- * @apiParam (jsonBody) {String} username 新成员的平台用户名
+ * @apiParam (jsonBody) {String} mobile 新成员的手机号
  * @apiParam (jsonBody) {Number} tenantId 租户ID
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
@@ -118,9 +118,9 @@ const url3 = `http://${idm_domain}/api-user/saasuser/add`;
  */
 membersApi.post('/',async (ctx,next)=>{
     let body = ctx.request.body;
-    let result  = await request.post(url,{
-        form: {
-            userName: body.username,
+    let result  = await request.post(url3,{
+        qs: {
+            mobile: body.mobile,
             tenantId: body.tenantId ? body.tenantId:1
         },
         headers:{
@@ -129,7 +129,6 @@ membersApi.post('/',async (ctx,next)=>{
     }).then((result)=>{
         return result;
     });
-    delete result['data'];
     ctx.body = result;
 });
 module.exports = membersApi;

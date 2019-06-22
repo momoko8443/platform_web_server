@@ -15,10 +15,10 @@ let request = rp.defaults({transform:autoParse});
 const url = `http://${idm_domain}/api-user/saasuser/memberlist`;
 /**
  * @api {get} /api/users
- * @apiDescription 根据用户名搜索平台下的用户列表
+ * @apiDescription 根据手机号搜索平台下的用户列表
  * @apiName searchUsers
  * @apiGroup Users
- * @apiParam (queryParams) {String} username 用户名
+ * @apiParam (queryParams) {String} mobile 手机号
  * @apiParam (queryParams) {Number} pageSize 页面大小
  * @apiParam (queryParams) {Number} currentPage 当前页码
  * @apiSuccess {json} result
@@ -46,7 +46,7 @@ usersApi.get('/', async (ctx)=>{
         form: {
             size: parseInt(query.pageSize),
             total: parseInt(query.currentPage),
-            username: query.username
+            mobile: query.mobile
         },
         headers: {
             'Authorization' : auth.buildBearerAuth(ctx)
