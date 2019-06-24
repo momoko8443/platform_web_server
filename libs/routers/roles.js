@@ -51,7 +51,7 @@ const url = `http://${idm_domain}/api-user/saasRole/page`;
  */
 rolesApi.get('/', async (ctx)=>{
     let query = ctx.query;
-    let body  = await request.get(url,{
+    let result  = await request.get(url,{
         qs: {
             tenantId: parseInt(query.tenantId),
             size: parseInt(query.pageSize),
@@ -64,7 +64,7 @@ rolesApi.get('/', async (ctx)=>{
     }).then((result)=>{
         return result;
     });
-    ctx.body = body.data;
+    ctx.body = result.data;
 });
 const url3 = `http://${idm_domain}/api-user/saasRole/v1`;
 /**
@@ -97,7 +97,7 @@ const url3 = `http://${idm_domain}/api-user/saasRole/v1`;
  */
 rolesApi.get('/:id', async (ctx,next)=>{
     let roleId = ctx.params.id;
-    let body = await request.get({
+    let result = await request.get({
         url: url3 + '/'+roleId, 
         headers:{
             'Authorization': auth.buildBearerAuth(ctx)
@@ -105,7 +105,7 @@ rolesApi.get('/:id', async (ctx,next)=>{
     }).then((result)=>{
         return result;
     })
-    ctx.body = body.data;
+    ctx.body = result.data;
 });
 const url2 = `http://${idm_domain}/api-user/saasRole/add`;
 /**

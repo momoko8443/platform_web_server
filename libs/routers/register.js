@@ -47,9 +47,9 @@ registerApi.post('/person', async (ctx)=>{
 
 const url2 = `http://${idm_domain}/api-user/register/enterprise`;
 /**
- * @api {post} /register/person
- * @apiDescription 注册个人用户
- * @apiName registerUser
+ * @api {post} /register/enterprise
+ * @apiDescription 注册企业用户
+ * @apiName registerEnterprise
  * @apiGroup Register
  * @apiParam (jsonBody) {String} areaId 区ID
  * @apiParam (jsonBody) {String} cityId 市ID

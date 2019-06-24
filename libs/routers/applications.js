@@ -35,7 +35,7 @@ let request = rp.defaults({transform:autoParse});
 const url = `http://${idm_domain}/api-user/saasTenantApp/list`;
 applicationsApi.get('/', async (ctx)=>{
     let tenantId = ctx.query.tenantId;
-    let body  = await request.get(url,{
+    let result  = await request.get(url,{
         qs: {
             tenantId: tenantId,
         },
@@ -45,7 +45,7 @@ applicationsApi.get('/', async (ctx)=>{
     }).then((result)=>{
         return result;
     });
-    ctx.body = body.data;
+    ctx.body = result.data;
 });
 
 const url2 = `http://${idm_domain}/api-user/saasAppPermission/tree`;
@@ -89,7 +89,7 @@ const url2 = `http://${idm_domain}/api-user/saasAppPermission/tree`;
 applicationsApi.get('/:appId/permissions', async (ctx)=>{
     let appId = ctx.params.appId;
     let tenantId = ctx.query.tenantId;
-    let body  = await request.get(url2,{
+    let result  = await request.get(url2,{
         qs: {
             tenantId: parseInt(tenantId),
             appId: parseInt(appId),
@@ -100,7 +100,7 @@ applicationsApi.get('/:appId/permissions', async (ctx)=>{
     }).then((result)=>{
         return result;
     });
-    ctx.body = body.data;
+    ctx.body = result.data;
 });
 
 module.exports = applicationsApi;

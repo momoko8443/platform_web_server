@@ -4,6 +4,7 @@ const rp = require('request-promise');
 
 const registerApi = require('./routers/register');
 const senderApi = require('./routers/sender');
+const industryApi = require('./routers/industry');
 const validatorApi = require('./routers/validator');
 const usersApi = require('./routers/users');
 const memebersApi = require('./routers/members');
@@ -58,6 +59,8 @@ router.get('/api/user', async (ctx) => {
   ctx.body = user;
 });
 
+
+router.use('/industry',industryApi.routes(), industryApi.allowedMethods());
 router.use('/sender',senderApi.routes(), senderApi.allowedMethods());
 router.use('/validator',validatorApi.routes(), validatorApi.allowedMethods());
 router.use('/register',registerApi.routes(), registerApi.allowedMethods());

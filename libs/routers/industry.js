@@ -1,7 +1,7 @@
 const Router = require('koa-router');
 const rp = require('request-promise');
 const auth = require('../utils/auth');
-const tenantsApi = new Router();
+const industryApi = new Router();
 let idm_domain = process.env.IDM? process.env.IDM : "47.111.18.39:5200";
 function autoParse(body, response, resolveWithFullResponse) {
     if (response.headers['content-type'] && response.headers['content-type'].search('application/json') > -1) {
@@ -12,13 +12,12 @@ function autoParse(body, response, resolveWithFullResponse) {
 }
 let request = rp.defaults({transform:autoParse});
 
-const url = `http://${idm_domain}/api-user/saasTenantApp/switchTenant`;
+const url = `http://${idm_domain}/api-user/industry/list`;
 /**
- * @api {put} /api/current_tenant
- * @apiDescription 切换当前登录用户的租户
- * @apiName switchTenant
- * @apiGroup Tenants
- * @apiParam (jsonBody) {String} tenantId 租户ID
+ * @api {get} /industry
+ * @apiDescription 获取行业列表
+ * @apiName getIndustry
+ * @apiGroup Industry
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
 {
@@ -30,21 +29,15 @@ const url = `http://${idm_domain}/api-user/saasTenantApp/switchTenant`;
 	"timestamp": ""
 }
  */
-tenantsApi.put('/', async (ctx)=>{
+industryApi.get('/', async (ctx)=>{
     let body = ctx.request.body;
-    let result  = await request.post(url,{
-        qs: {
-            tenantId: body.tenantId
-        },
-        headers: {
-            'Authorization' : auth.buildBearerAuth(ctx)
-        }
-    }).then((result)=>{
+    let result  = await request.get(url,{})
+    .then((result)=>{
         return result;
     });
-    ctx.body = result;
+    ctx.body = result.data;
 });
 
 
 
-module.exports = tenantsApi;
+module.exports = industryApi;

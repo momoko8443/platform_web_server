@@ -42,7 +42,7 @@ const url = `http://${idm_domain}/api-user/saasuser/memberlist`;
  */
 usersApi.get('/', async (ctx)=>{
     let query = ctx.query;
-    let body  = await request.post(url,{
+    let result  = await request.post(url,{
         form: {
             size: parseInt(query.pageSize),
             total: parseInt(query.currentPage),
@@ -54,7 +54,7 @@ usersApi.get('/', async (ctx)=>{
     }).then((result)=>{
         return result;
     });
-    ctx.body = body.data;
+    ctx.body = result.data;
 });
 
 const url2 = `http://${idm_domain}/api-user/saasTenantApp/switchTenant`;
