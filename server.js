@@ -12,6 +12,7 @@ const views = require('koa-views');
 const router = new Router();
 
 app.keys = ['secret', 'key'];
+let skipAuth = process.env.SKIP_AUTH;
 let domain = process.env.DOMAIN? process.env.DOMAIN : "localhost:3000";
 let idm_domain = process.env.IDM? process.env.IDM : "47.111.18.39:5200";
 const CONFIG = {

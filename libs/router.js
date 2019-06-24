@@ -22,7 +22,7 @@ router.post('/jumper',async (ctx) => {
   let appUrl = decodeURI(body.appUrl);
   console.log(appUrl);
   const access_token = ctx.req.user.token.access_token;
-  const redirectUrl = 'http://' + idm_domain + appUrl + '&access_token=' + access_token;
+  const redirectUrl = 'http://' + idm_domain + appUrl; //+ '&access_token=' + access_token;
   console.log(redirectUrl);
   ctx.body = redirectUrl;
 })
