@@ -17,8 +17,8 @@ let request = rp.defaults({transform:autoParse});
 const url = `http://${idm_domain}/api-msg/check/personal_register_code`;
 /**
  * @api {post} /validator/register/person/code
- * @apiDescription  发送个人注册短信
- * @apiName validatorSmsPerson
+ * @apiDescription  验证个人注册短信
+ * @apiName validatorCodePerson
  * @apiGroup Validator
  * @apiParam (jsonBody) {String} mobile 用户手机号
  * @apiParam (jsonBody) {String} code 用户收到的验证码
@@ -36,6 +36,70 @@ const url = `http://${idm_domain}/api-msg/check/personal_register_code`;
 validatorApi.post('/register/person/code', async (ctx)=>{
     let body = ctx.request.body;
     let result  = await request.post(url,{
+        qs: {
+            mobile: body.mobile,
+            code: body.code
+        } 
+    }).then((result)=>{
+        return result;
+    });
+    ctx.body = result;
+});
+
+const url2 = `http://${idm_domain}/api-msg/check/enterprise_register_code`;
+/**
+ * @api {post} /validator/register/enterprise/code
+ * @apiDescription  验证企业注册短信
+ * @apiName validatorCodeEnterprise
+ * @apiGroup Validator
+ * @apiParam (jsonBody) {String} mobile 用户手机号
+ * @apiParam (jsonBody) {String} code 用户收到的验证码
+ * @apiSuccess {json} result
+ * @apiSuccessExample {json} Success-Response:
+{
+    "code": 0,
+    "errors": null,
+    "message": "success",
+    "data": "验证通过",
+    "extra": null,
+    "timestamp": "2019-06-22 15:56:13"
+}
+ */
+validatorApi.post('/register/enterprise/code', async (ctx)=>{
+    let body = ctx.request.body;
+    let result  = await request.post(url2,{
+        qs: {
+            mobile: body.mobile,
+            code: body.code
+        } 
+    }).then((result)=>{
+        return result;
+    });
+    ctx.body = result;
+});
+
+const url3 = `http://${idm_domain}/api-msg/check/login_code`;
+/**
+ * @api {post} /validator/register/enterprise/code
+ * @apiDescription  验证登录码
+ * @apiName validatorLoginCode
+ * @apiGroup Validator
+ * @apiParam (jsonBody) {String} mobile 用户手机号
+ * @apiParam (jsonBody) {String} code 用户收到的验证码
+ * @apiSuccess {json} result
+ * @apiSuccessExample {json} Success-Response:
+{
+    "code": 0,
+    "errors": null,
+    "message": "success",
+    "data": "验证通过",
+    "extra": null,
+    "timestamp": "2019-06-22 15:56:13"
+}
+ */
+validatorApi.post('/login/code', async (ctx)=>{
+    let body = ctx.request.body;
+    let result  = await request.post(url3,{
         qs: {
             mobile: body.mobile,
             code: body.code

@@ -57,6 +57,39 @@ usersApi.get('/', async (ctx)=>{
     ctx.body = body.data;
 });
 
+const url2 = `http://${idm_domain}/api-user/saasTenantApp/switchTenant`;
+/**
+ * @api {put} /api/users/current_tenant
+ * @apiDescription 切换当前登录用户的租户
+ * @apiName switchTenant
+ * @apiGroup Tenants
+ * @apiParam (jsonBody) {String} tenantId 租户ID
+ * @apiSuccess {json} result
+ * @apiSuccessExample {json} Success-Response:
+{
+	"code": 0,
+	"errors": "这是错误",
+	"message": "成功",
+	"data": "返回数据",
+	"extra": "附加数据",
+	"timestamp": ""
+}
+ */
+usersApi.put('/current_tenant', async (ctx)=>{
+    let body = ctx.request.body;
+    let result  = await request.post(url2,{
+        qs: {
+            tenantId: body.tenantId
+        },
+        headers: {
+            'Authorization' : auth.buildBearerAuth(ctx)
+        }
+    }).then((result)=>{
+        return result;
+    });
+    ctx.body = result;
+});
+
 
 
 module.exports = usersApi;

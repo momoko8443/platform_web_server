@@ -44,4 +44,40 @@ registerApi.post('/person', async (ctx)=>{
     ctx.body = result;
 });
 
+
+const url2 = `http://${idm_domain}/api-user/register/enterprise`;
+/**
+ * @api {post} /register/person
+ * @apiDescription 注册个人用户
+ * @apiName registerUser
+ * @apiGroup Register
+ * @apiParam (jsonBody) {String} areaId 区ID
+ * @apiParam (jsonBody) {String} cityId 市ID
+ * @apiParam (jsonBody) {String} contact_name 联系人名称
+ * @apiParam (jsonBody) {String} enterpriseLogo 企业logo
+ * @apiParam (jsonBody) {String} industryType 行业类型
+ * @apiParam (jsonBody) {String} mobile 手机号
+ * @apiParam (jsonBody) {String} provinceId 省ID
+ * @apiParam (jsonBody) {String} tenantName 租户名
+ * @apiSuccess {json} result
+ * @apiSuccessExample {json} Success-Response:
+{
+	"code": 0,
+	"errors": "这是错误",
+	"message": "成功",
+	"data": "返回数据",
+	"extra": "附加数据",
+	"timestamp": ""
+}
+ */
+registerApi.post('/enterprise', async (ctx)=>{
+    let body = ctx.request.body;
+    let result  = await request.post(url,{
+        qs: body
+    }).then((result)=>{
+        return result;
+    });
+    ctx.body = result;
+});
+
 module.exports = registerApi;
