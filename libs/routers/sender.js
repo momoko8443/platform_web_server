@@ -44,7 +44,7 @@ senderApi.post('/register/person/code', async (ctx)=>{
 
 const url2 = `http://${idm_domain}/api-msg/send/enterpriseRegister`;
 /**
- * @api {post} /sender/register/enterparise/code
+ * @api {post} /sender/register/enterprise/code
  * @apiDescription  发送企业注册短信
  * @apiName senderRegisterEnterprise
  * @apiGroup Sender
