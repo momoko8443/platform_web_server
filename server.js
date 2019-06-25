@@ -91,6 +91,8 @@ app.use(benyunRouter.allowedMethods());
 
 
 app.listen(3000, ()=>{
+  console.log('domain',domain);
+  console.log('idm', idm_domain);
   console.log(`listen on ${domain}`);
 });
 
