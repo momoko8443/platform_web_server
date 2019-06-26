@@ -14,7 +14,7 @@ const router = new Router();
 app.keys = ['secret', 'key'];
 let skipAuth = process.env.SKIP_AUTH;
 let domain = process.env.DOMAIN? process.env.DOMAIN : "localhost:3000";
-let idm_domain = process.env.IDM? process.env.IDM : "47.111.18.39:5200";
+let idm_domain = process.env.IDM? process.env.IDM : "47.104.78.73:5200";
 const CONFIG = {
     key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
     /** (number || 'session') maxAge in ms (default is 1 days) */

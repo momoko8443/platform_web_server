@@ -12,7 +12,7 @@ const rolesApi = require('./routers/roles');
 const applicationsApi = require('./routers/applications');
 
 const SKIP_AUTH = !!+process.env.SKIP_AUTH;
-let idm_domain = process.env.IDM? process.env.IDM : "47.111.18.39:5200";
+let idm_domain = process.env.IDM? process.env.IDM : "47.104.78.73:5200";
 const router = new Router({
   prefix: '/benyun'
 });

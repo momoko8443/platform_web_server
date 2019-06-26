@@ -15,7 +15,7 @@ const auth= require('../utils/auth');
 const client_ID = "webApp";
 const client_secret = "webApp";
 const domain = process.env.DOMAIN? process.env.DOMAIN : "localhost:3000";
-let idm_domain = process.env.IDM? process.env.IDM : "47.111.18.39:5200";
+let idm_domain = process.env.IDM? process.env.IDM : "47.104.78.73:5200";
 
 let userPool = {};
 passport.use(new LocalStrategy((username,password,cb)=>{

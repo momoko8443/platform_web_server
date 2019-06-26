@@ -3,7 +3,7 @@ const Router = require('koa-router');
 const rp = require('request-promise');
 const auth = require('../utils/auth');
 const validatorApi = new Router();
-let idm_domain = process.env.IDM? process.env.IDM : "47.111.18.39:5200";
+let idm_domain = process.env.IDM? process.env.IDM : "47.104.78.73:5200";
 function autoParse(body, response, resolveWithFullResponse) {
     if (response.headers['content-type'] && response.headers['content-type'].search('application/json') > -1) {
         return JSON.parse(body);
