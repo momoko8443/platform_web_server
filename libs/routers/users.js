@@ -62,7 +62,7 @@ const url2 = `http://${idm_domain}/api-user/saasTenantApp/switchTenant`;
  * @api {put} /api/users/current_tenant
  * @apiDescription 切换当前登录用户的租户
  * @apiName switchTenant
- * @apiGroup Tenants
+ * @apiGroup Users
  * @apiParam (jsonBody) {String} tenantId 租户ID
  * @apiSuccess {json} result
  * @apiSuccessExample {json} Success-Response:
