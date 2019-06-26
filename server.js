@@ -9,6 +9,7 @@ const Router = require('koa-router');
 const path = require('path');
 const render = require('koa-ejs');
 const views = require('koa-views');
+const authService = require('./libs/services/auth');
 const router = new Router();
 
 app.keys = ['secret', 'key'];
@@ -63,14 +64,18 @@ router.get('/login',
     await ctx.render('login');
 });
 
-// router.post('/login', 
-//   passport.authenticate('local', 
-//     { 
-//       failureRedirect: '/login?code=400',
-//       successRedirect: '/main',
-//     })
-// );
 router.post('/login', passport.authenticate('local',{successRedirect: '/main'}));
+router.get('/logout',async(ctx ,next)=>{
+  if(ctx.isAuthenticated()){
+    //ctx.logout();
+    let token = ctx.req.user.token.access_token;
+    let result = await authService.logout(token);
+    await ctx.logout();
+    await ctx.redirect('/login');
+  }else{
+    await ctx.redirect('/login');
+  }
+});
 
 router.get('/main',async(ctx,next) => {
   if(ctx.isAuthenticated()){
