@@ -19,8 +19,9 @@ const domain = process.env.DOMAIN? process.env.DOMAIN : "localhost:3000";
 let idm_domain = process.env.IDM? process.env.IDM : "47.104.78.73:5200";
 
 let userPool = {};
-passport.use(new LocalStrategy((username,password,cb)=>{
-    const url = buildTokenURL() + '?mobile=' + username + '&password=' + password;
+passport.use(new LocalStrategy({passReqToCallback:true},(req,username,password,cb)=>{
+    const type = req.body.type ? req.body.type : 'password';
+    const url = buildTokenURL(type) + '?mobile=' + username + '&password=' + password;
     let token;
     console.log(url);
     rp.post({
@@ -60,8 +61,13 @@ passport.deserializeUser(function(username, done) {
     }
 });
 
-function buildTokenURL(){
-    return `http://${idm_domain}/api-auth/oauth/mobile/token`;
+function buildTokenURL(type){
+    if(type === 'code'){
+        return `http://${idm_domain}/api-auth/oauth/code/token`;
+    }else{
+        return `http://${idm_domain}/api-auth/oauth/mobile/token`;
+    }
+    
 }
 function buildUserProfileURL(){
     return `http://${idm_domain}/api-user/saasuser/users/current`;
