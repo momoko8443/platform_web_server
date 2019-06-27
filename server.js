@@ -21,7 +21,7 @@ const CONFIG = {
     /** (number || 'session') maxAge in ms (default is 1 days) */
     /** 'session' will result in a cookie that expires when session/browser is closed */
     /** Warning: If a session cookie is stolen, this cookie will never expire */
-    maxAge: 5 * 60 * 1000,
+    maxAge: 30 * 60 * 1000,
     autoCommit: true, /** (boolean) automatically commit headers (default true) */
     overwrite: true, /** (boolean) can overwrite or not (default true) */
     httpOnly: true, /** (boolean) httpOnly or not (default true) */
@@ -96,6 +96,11 @@ router.get('/main',async(ctx,next) => {
 // })
 app.use(async(ctx, next) => {
   console.log('http request in',ctx.request.path);
+  if(ctx.isAuthenticated()){
+    console.log(new Date());
+    const token = ctx.req.user.token.access_token;
+    console.log('access token:', token);
+  }
   await next();
   //console.log('http response out',ctx.request.path);
 });

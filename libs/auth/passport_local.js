@@ -33,11 +33,20 @@ passport.use(new LocalStrategy({passReqToCallback:true},(req,username,password,c
         json: true
     }).then((result)=>{
         token = result;
+        console.log('LOGIN GET ACCESS_TOKEN', token.access_token);
         return userService.getUser(token.access_token);
     }).then((result)=>{
         let user = {};
         user.profile = result;
         user.token = token;
+        if(Object.keys(userPool).length > 1000){
+            userPool = {};
+        }
+        let username = user.profile.mobile;
+
+        userPool[username] = user;
+
+        
         return cb(null, user);
     })
     .catch((error)=>{
@@ -47,9 +56,9 @@ passport.use(new LocalStrategy({passReqToCallback:true},(req,username,password,c
 
 passport.serializeUser(function(user, done) {
     let username = user.profile.mobile;
-    if(!userPool[username]){
-        userPool[username] = user;
-    }
+    // if(!userPool[username]){
+    //     userPool[username] = user;
+    // }
     done(null, username);
   });
   
