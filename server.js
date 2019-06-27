@@ -49,6 +49,7 @@ app.use(static(__dirname + '/docs'));
 //     await next();
 //   }
 // });
+
 router.use('/main',async (ctx, next)=>{
   if(!ctx.isAuthenticated()){
     // const redirect_uri = buildRedirectUri();
@@ -89,6 +90,11 @@ router.get('/main',async(ctx,next) => {
 //   await next();
 //   console.log('bbb');
 // })
+app.use(async(ctx, next) => {
+  console.log('http request in',ctx.request.path);
+  await next();
+  //console.log('http response out',ctx.request.path);
+});
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(benyunRouter.routes());
