@@ -39,9 +39,9 @@ passport.use(new LocalStrategy({passReqToCallback:true},(req,username,password,c
         let user = {};
         user.profile = result;
         user.token = token;
-        if(Object.keys(userPool).length > 1000){
-            userPool = {};
-        }
+        // if(Object.keys(userPool).length > 1000){
+        //     userPool = {};
+        // }
         let username = user.profile.mobile;
 
         userPool[username] = user;
