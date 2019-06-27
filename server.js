@@ -21,7 +21,7 @@ const CONFIG = {
     /** (number || 'session') maxAge in ms (default is 1 days) */
     /** 'session' will result in a cookie that expires when session/browser is closed */
     /** Warning: If a session cookie is stolen, this cookie will never expire */
-    maxAge: 30 * 60 * 1000,
+    maxAge: 5 * 60 * 1000,
     autoCommit: true, /** (boolean) automatically commit headers (default true) */
     overwrite: true, /** (boolean) can overwrite or not (default true) */
     httpOnly: true, /** (boolean) httpOnly or not (default true) */
@@ -62,7 +62,11 @@ router.use('/main',async (ctx, next)=>{
 });
 router.get('/login',
   async (ctx, next) => { 
-    await ctx.render('login');
+    if(ctx.isAuthenticated()){
+      await ctx.render('main');
+    }else{
+      await ctx.render('login');
+    }
 });
 
 router.post('/login', passport.authenticate('local',{successRedirect: '/main'}));

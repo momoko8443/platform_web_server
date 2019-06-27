@@ -21,7 +21,7 @@ let idm_domain = process.env.IDM? process.env.IDM : "47.104.78.73:5200";
 let userPool = {};
 passport.use(new LocalStrategy({passReqToCallback:true},(req,username,password,cb)=>{
     const type = req.body.type ? req.body.type : 'password';
-    const url = buildTokenURL(type) + '?mobile=' + username + '&password=' + password;
+    const url = buildTokenURL(type) + `?mobile=${username}&${type}=${password}`;
     let token;
     console.log(url);
     rp.post({
