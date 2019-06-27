@@ -14,7 +14,7 @@ let request = rp.defaults({transform:autoParse});
 
 const url = `http://${idm_domain}/api-user/saasuser/page`;
 /**
- * @api {get} /api//members
+ * @api {get} /api/members
  * @apiDescription 获取租户下所有成员列表
  * @apiName getMembers
  * @apiGroup Members

@@ -67,6 +67,8 @@ router.use('/industry',industryApi.routes(), industryApi.allowedMethods());
 router.use('/sender',senderApi.routes(), senderApi.allowedMethods());
 router.use('/validator',validatorApi.routes(), validatorApi.allowedMethods());
 router.use('/register',registerApi.routes(), registerApi.allowedMethods());
+
+
 router.use('/api/users', usersApi.routes(), usersApi.allowedMethods());
 router.use('/api/members', memebersApi.routes(), memebersApi.allowedMethods());
 router.use('/api/roles', rolesApi.routes(), rolesApi.allowedMethods());
