@@ -12,6 +12,7 @@ const rolesApi = require('./routers/roles');
 const tenantsApi = require('./routers/tenants');
 const mobileApi = require('./routers/mobile');
 const applicationsApi = require('./routers/applications');
+const senderPhone = require('./routers/senderPhone');
 
 const SKIP_AUTH = !!+process.env.SKIP_AUTH;
 let idm_domain = process.env.IDM? process.env.IDM : "47.104.78.73:5200";
@@ -67,7 +68,7 @@ router.use('/industry',industryApi.routes(), industryApi.allowedMethods());
 router.use('/sender',senderApi.routes(), senderApi.allowedMethods());
 router.use('/validator',validatorApi.routes(), validatorApi.allowedMethods());
 router.use('/register',registerApi.routes(), registerApi.allowedMethods());
-
+router.use('/senderPhone',senderPhone.routes(), senderPhone.allowedMethods());
 
 router.use('/api/users', usersApi.routes(), usersApi.allowedMethods());
 router.use('/api/members', memebersApi.routes(), memebersApi.allowedMethods());
