@@ -72,7 +72,7 @@ const url2 = `http://${idm_domain}/api-user/register/enterprise`;
  */
 registerApi.post('/enterprise', async (ctx)=>{
     let body = ctx.request.body;
-    let result  = await request.post(url,{
+    let result  = await request.post(url2,{
         qs: body
     }).then((result)=>{
         return result;
