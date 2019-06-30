@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const log4js = require('koa-log4')
 const app = new Koa();
 const static = require('koa-static');
 const bodyParser = require('koa-bodyparser')
@@ -11,6 +12,8 @@ const render = require('koa-ejs');
 const views = require('koa-views');
 const authService = require('./libs/services/auth');
 const router = new Router();
+log4js.configure(require('./config/log4js.json'));
+const log = log4js.getLogger("app");
 
 app.keys = ['secret', 'key'];
 let skipAuth = process.env.SKIP_AUTH;
@@ -35,6 +38,7 @@ app.use(session(CONFIG, app));
 app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(log4js.koaLogger(log4js.getLogger("http"), { level: 'auto' }));
 app.use(static(__dirname + '/public/main'));
 app.use(static(__dirname + '/public/idm'));
 app.use(static(__dirname + '/docs'));
@@ -89,26 +93,15 @@ router.get('/main',async(ctx,next) => {
     await ctx.redirect('/login');
   }
 });
-// app.use(async(ctx,next)=>{
-//   console.log('aaa');
-//   await next();
-//   console.log('bbb');
-// })
-app.use(async(ctx, next) => {
-  console.log('http request in',ctx.request.path);
-  if(ctx.isAuthenticated()){
-    console.log(new Date());
-    const token = ctx.req.user.token.access_token;
-    console.log('access token:', token);
-  }
-  await next();
-  //console.log('http response out',ctx.request.path);
-});
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(benyunRouter.routes());
 app.use(benyunRouter.allowedMethods());
 
+app.on('error', err => {
+  log.error(err);
+});
 
 app.listen(3000, ()=>{
   console.log('domain',domain);

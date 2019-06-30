@@ -3,16 +3,8 @@ const passport = require('koa-passport');
 const LocalStrategy = require('passport-local').Strategy;
 const rp = require('request-promise');
 const userService = require('../services/user');
+const log = require('koa-log4').getLogger("idm");
 const auth= require('../utils/auth');
-// function autoParse(body, response, resolveWithFullResponse) {
-//     if (response.headers['content-type'] && response.headers['content-type'].search('application/json') > -1) {
-//         return JSON.parse(body);
-//     }else {
-//         return body;
-//     }
-// }
-// let request = rp.defaults({transform:autoParse});
-
 const client_ID = "webApp";
 const client_secret = "webApp";
 const domain = process.env.DOMAIN? process.env.DOMAIN : "localhost:3000";
@@ -23,7 +15,7 @@ passport.use(new LocalStrategy({passReqToCallback:true},(req,username,password,c
     const type = req.body.type ? req.body.type : 'password';
     const url = buildTokenURL(type) + `?mobile=${username}&${type}=${password}`;
     let token;
-    console.log(url);
+    log.debug(`${username} is login now, login type is ${type}`);
     rp.post({
         headers:{
             'content-type': 'application/json',
@@ -33,23 +25,22 @@ passport.use(new LocalStrategy({passReqToCallback:true},(req,username,password,c
         json: true
     }).then((result)=>{
         token = result;
-        console.log('LOGIN GET ACCESS_TOKEN', token.access_token);
+        log.debug(`${username} login success, access_token is ${token.access_token}`);
         return userService.getUser(token.access_token);
     }).then((result)=>{
         let user = {};
         user.profile = result;
         user.token = token;
+        log.debug(`fetch ${username} profile success`);
         // if(Object.keys(userPool).length > 1000){
         //     userPool = {};
         // }
-        let username = user.profile.mobile;
-
-        userPool[username] = user;
-
-        
+        let userKey = user.profile.mobile;
+        userPool[userKey] = user;
         return cb(null, user);
     })
     .catch((error)=>{
+        log.debug(`${username} login failed`);
         return cb(null, false);
     });
 }));
