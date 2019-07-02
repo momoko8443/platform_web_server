@@ -54,17 +54,17 @@ app.use(static(__dirname + '/docs'));
 //   }
 // });
 
-router.use('/main',async (ctx, next)=>{
+router.get('/main*',async (ctx, next)=>{
   if(!ctx.isAuthenticated()){
     // const redirect_uri = buildRedirectUri();
     // const loginUrl = buildLoginUri('code','user_info','benyun','We@lthW@yClientId',redirect_uri);
     // ctx.response.redirect(loginUrl);
-    await ctx.redirect('/login');
+    await ctx.redirect('/auth/login');
   }else{
     await ctx.render('main')
   }
 });
-router.get('/login',
+router.get('/auth/*',
   async (ctx, next) => { 
     if(ctx.isAuthenticated()){
       await ctx.render('main');
@@ -80,19 +80,19 @@ router.get('/logout',async(ctx ,next)=>{
     let token = ctx.req.user.token.access_token;
     let result = await authService.logout(token);
     await ctx.logout();
-    await ctx.redirect('/login');
+    await ctx.redirect('/auth/login');
   }else{
-    await ctx.redirect('/login');
+    await ctx.redirect('/auth/login');
   }
 });
 
-router.get('/main',async(ctx,next) => {
-  if(ctx.isAuthenticated()){
-    await ctx.render('main');
-  }else{
-    await ctx.redirect('/login');
-  }
-});
+// router.get('/main',async(ctx,next) => {
+//   if(ctx.isAuthenticated()){
+//     await ctx.render('main');
+//   }else{
+//     await ctx.redirect('/login');
+//   }
+// });
 
 app.use(router.routes());
 app.use(router.allowedMethods());

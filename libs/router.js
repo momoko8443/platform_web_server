@@ -49,7 +49,6 @@ router.use('/api/*', async (ctx, next) => {
     await next()
   } else {
     ctx.status = 401;
-    //ctx.redirect("/main#/error");
     ctx.body = {
       msg: 'auth fail'
     }
